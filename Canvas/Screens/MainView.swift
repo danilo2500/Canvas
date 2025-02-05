@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var showOverlaySheet = false
+    
     var body: some View {
         ZStack {
             Color.black
@@ -21,32 +23,29 @@ struct MainView: View {
                         .frame(height: 200)
                     Spacer()
                 }
-                Toolbar()
+                VStack {
+                    Divider()
+                        .overlay(.white)
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showOverlaySheet.toggle()
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 40))
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                        Spacer()
+                    }
+                }
+                .frame(height: 80)
                     .padding(.bottom)
             }
         }
-    }
-}
-
-struct Toolbar: View {
-    var body: some View {
-        VStack {
-            Divider()
-                .overlay(.white)
-            HStack {
-                Spacer()
-                Button(action: {
-                    print("Plus button tapped")
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 40))
-                        .foregroundColor(.white)
-                }
-                .padding()
-                Spacer()
-            }
+        .sheet(isPresented: $showOverlaySheet) {
+            OverlaysView()
         }
-        .frame(height: 80)
     }
 }
 
