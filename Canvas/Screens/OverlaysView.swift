@@ -35,9 +35,11 @@ struct OverlaysView: View {
                                 Image(systemName: image)
                                     .resizable()
                                     .scaledToFit()
+                                    .foregroundColor(.white)
                                     .frame(width: 100, height: 100)
                             }
-                        }                }
+                        }
+                    }
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -57,7 +59,7 @@ struct OverlaysView: View {
         }
         .onAppear {
             self.isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.isLoading = false
             }
         }
