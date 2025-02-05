@@ -21,7 +21,7 @@ struct MainView: View {
                         .frame(height: 200)
                     Spacer()
                 }
-                ToolBar()
+                Toolbar()
                     .padding(.bottom)
             }
         }
@@ -39,9 +39,10 @@ struct Toolbar: View {
                     print("Plus button tapped")
                 }) {
                     Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 50))
+                        .font(.system(size: 40))
                         .foregroundColor(.white)
                 }
+                .padding()
                 Spacer()
             }
         }
