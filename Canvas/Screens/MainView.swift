@@ -9,18 +9,48 @@ import SwiftUI
 
 struct MainView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            Color.black
+                .edgesIgnoringSafeArea(.all)
+
+            VStack {
+                VStack {
+                    Spacer()
+                    Rectangle()
+                        .foregroundColor(.white)
+                        .frame(height: 200)
+                    Spacer()
+                }
+                ToolBar()
+                    .padding(.bottom)
+            }
         }
-        .padding()
+    }
+}
+
+struct Toolbar: View {
+    var body: some View {
+        VStack {
+            Divider()
+                .overlay(.white)
+            HStack {
+                Spacer()
+                Button(action: {
+                    print("Plus button tapped")
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 50))
+                        .foregroundColor(.white)
+                }
+                Spacer()
+            }
+        }
+        .frame(height: 80)
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MainView()
     }
 }
