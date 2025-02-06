@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5501C4582D543AE1008C002E /* RESTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4542D543AE0008C002E /* RESTRequest.swift */; };
+		5501C4592D543AE1008C002E /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4552D543AE0008C002E /* HTTPMethod.swift */; };
+		5501C45A2D543AE2008C002E /* RESTErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4562D543AE1008C002E /* RESTErrors.swift */; };
+		5501C45B2D543AE2008C002E /* RESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4572D543AE1008C002E /* RESTService.swift */; };
 		5593B9F32D51625C00AC5F3D /* CanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5593B9F22D51625C00AC5F3D /* CanvasApp.swift */; };
 		5593B9F52D51625C00AC5F3D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5593B9F42D51625C00AC5F3D /* MainView.swift */; };
 		5593B9F72D51626100AC5F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5593B9F62D51626100AC5F3D /* Assets.xcassets */; };
@@ -15,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5501C4542D543AE0008C002E /* RESTRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTRequest.swift; sourceTree = "<group>"; };
+		5501C4552D543AE0008C002E /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		5501C4562D543AE1008C002E /* RESTErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTErrors.swift; sourceTree = "<group>"; };
+		5501C4572D543AE1008C002E /* RESTService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTService.swift; sourceTree = "<group>"; };
 		5593B9EF2D51625C00AC5F3D /* Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5593B9F22D51625C00AC5F3D /* CanvasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasApp.swift; sourceTree = "<group>"; };
 		5593B9F42D51625C00AC5F3D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -34,6 +42,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5501C4532D543AD5008C002E /*  RESTService */ = {
+			isa = PBXGroup;
+			children = (
+				5501C4552D543AE0008C002E /* HTTPMethod.swift */,
+				5501C4562D543AE1008C002E /* RESTErrors.swift */,
+				5501C4542D543AE0008C002E /* RESTRequest.swift */,
+				5501C4572D543AE1008C002E /* RESTService.swift */,
+			);
+			path = " RESTService";
+			sourceTree = "<group>";
+		};
 		5593B9E62D51625C00AC5F3D = {
 			isa = PBXGroup;
 			children = (
@@ -53,6 +72,7 @@
 		5593B9F12D51625C00AC5F3D /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				559BD0BD2D53D0A5000A52F7 /* Modules */,
 				559BD0B92D53ABB4000A52F7 /* Screens */,
 				5593B9F22D51625C00AC5F3D /* CanvasApp.swift */,
 				5593B9F62D51626100AC5F3D /* Assets.xcassets */,
@@ -76,6 +96,14 @@
 				559BD0BB2D53C13A000A52F7 /* OverlaysView.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		559BD0BD2D53D0A5000A52F7 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				5501C4532D543AD5008C002E /*  RESTService */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +179,10 @@
 				5593B9F52D51625C00AC5F3D /* MainView.swift in Sources */,
 				5593B9F32D51625C00AC5F3D /* CanvasApp.swift in Sources */,
 				559BD0BC2D53C13A000A52F7 /* OverlaysView.swift in Sources */,
+				5501C4592D543AE1008C002E /* HTTPMethod.swift in Sources */,
+				5501C45A2D543AE2008C002E /* RESTErrors.swift in Sources */,
+				5501C45B2D543AE2008C002E /* RESTService.swift in Sources */,
+				5501C4582D543AE1008C002E /* RESTRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
