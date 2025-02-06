@@ -10,19 +10,15 @@ import SwiftUI
 struct OverlaysView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State private var isLoading: Bool = false
+    @StateObject private var viewModel = OverlaysViewModel()
     
     let columns: [GridItem] = [
         GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())
     ]
     
-    let images = [
-        "star.fill", "heart.fill", "camera.fill", "bell.fill", "airplane", "cloud.fill", "leaf.fill", "moon.fill"
-    ]
-    
     var body: some View {
         NavigationStack {
-            if isLoading {
+            if viewModel.isLoading {
                 ProgressView("Fetching Images")
                     .progressViewStyle(.circular)
             } else {
@@ -31,7 +27,7 @@ struct OverlaysView: View {
                         .ignoresSafeArea()
                     ScrollView {
                         LazyVGrid(columns: columns) {
-                            ForEach(images, id: \.self) { image in
+                            ForEach(viewModel.images, id: \.self) { image in
                                 Image(systemName: image)
                                     .resizable()
                                     .scaledToFit()
@@ -58,10 +54,7 @@ struct OverlaysView: View {
             }
         }
         .onAppear {
-            self.isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.isLoading = false
-            }
+            viewModel.fetchImages()
         }
     }
 }
