@@ -19,28 +19,26 @@ struct OverlaysView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.black
-                    .ignoresSafeArea()
-                if viewModel.isLoading {
-                    ProgressView()
-                        .tint(.white)
-                } else {
-                    ScrollView {
-                        LazyVGrid(columns: columns) {
+                BackgroundView()
+                ScrollView {
+                    LazyVGrid(columns: columns) {
+                        if viewModel.isLoading {
+                            ForEach(0..<13) { _ in
+                                ProgressIndicator()
+                            }
+                        } else {
                             ForEach(viewModel.imagesURL, id: \.self) { imageURL in
                                 AsyncImage(url: imageURL) { phase in
                                     switch phase {
                                     case .empty:
-                                        ProgressView()
-                                            .frame(width: 87, height: 130)
-                                            .tint(.white)
+                                        ProgressIndicator()
                                     case .success(let image):
                                         image
                                             .resizable()
                                             .scaledToFit()
+                                            .cornerRadius(10)
                                             .frame(width: 87, height: 130)
                                             .padding()
-                                            .cornerRadius(10)
                                     default:
                                         Image(systemName: "x.circle.fill")
                                     }
@@ -51,17 +49,12 @@ struct OverlaysView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
-                    }
-                }
                 ToolbarItem(placement: .principal) {
                     Text("Overlays")
                         .foregroundColor(.white)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    DismissButton()
                 }
             }
         }
