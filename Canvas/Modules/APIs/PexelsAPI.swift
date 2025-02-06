@@ -8,26 +8,26 @@
 import Foundation
 
 enum PexelsAPI {
-    case getCuratedPhotos(page: Int)
+    case getCuratedPhotos(page: String)
 }
 
 extension PexelsAPI: RESTRequest {
     
     var baseURL: String {
-        return "https://api.pexels.com/"
+        return "https://api.pexels.com"
     }
 
     var path: String {
         switch self {
         case .getCuratedPhotos:
-            return "v1/curated"
+            return "/v1/curated"
         }
     }
     
     var queryItems: [URLQueryItem]? {
         switch self {
         case .getCuratedPhotos(let page):
-            return [URLQueryItem(name: "per_page", value: String(page))]
+            return [URLQueryItem(name: "page", value: page)]
         }
     }
     
@@ -39,6 +39,7 @@ extension PexelsAPI: RESTRequest {
     }
     
     var HTTPHeaderFields: [String : String]? {
+        // TODO: Store key on info.plist for better security
         return ["Authorization": "0rWBGhCRoFiVbbq4duycTLqsvROdrjKqHdGkciUBYdubEU21DoqNC6yY"]
     }
 }

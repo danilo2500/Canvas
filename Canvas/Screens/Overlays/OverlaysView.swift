@@ -19,7 +19,7 @@ struct OverlaysView: View {
     var body: some View {
         NavigationStack {
             if viewModel.isLoading {
-                ProgressView("Fetching Images")
+                ProgressView()
                     .progressViewStyle(.circular)
             } else {
                 ZStack {
@@ -27,12 +27,24 @@ struct OverlaysView: View {
                         .ignoresSafeArea()
                     ScrollView {
                         LazyVGrid(columns: columns) {
-                            ForEach(viewModel.images, id: \.self) { image in
-                                Image(systemName: image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundColor(.white)
-                                    .frame(width: 100, height: 100)
+                            ForEach(viewModel.imagesURL, id: \.self) { imageURL in
+                                AsyncImage(url: imageURL) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                            .frame(width: 80, height: 120)
+                                            .foregroundStyle(.white)
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 80, height: 120)
+                                            .padding()
+                                            .cornerRadius(10)
+                                    default:
+                                        Image(systemName: "x.circle.fill")
+                                    }
+                                }
                             }
                         }
                     }
@@ -55,6 +67,9 @@ struct OverlaysView: View {
         }
         .onAppear {
             viewModel.fetchImages()
+        }
+        .alert("Error fetching data", isPresented: $viewModel.showAlert) {
+            Button("OK", role: .cancel) {}
         }
     }
 }
