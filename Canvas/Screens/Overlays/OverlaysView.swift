@@ -18,50 +18,52 @@ struct OverlaysView: View {
     
     var body: some View {
         NavigationStack {
-            if viewModel.isLoading {
-                ProgressView()
-                    .progressViewStyle(.circular)
-            } else {
-                ZStack {
-                    Color.black
-                        .ignoresSafeArea()
-                    ScrollView {
-                        LazyVGrid(columns: columns) {
-                            ForEach(viewModel.imagesURL, id: \.self) { imageURL in
-                                AsyncImage(url: imageURL) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        ProgressView()
-                                            .frame(width: 87, height: 130)
-                                            .foregroundStyle(.white)
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 87, height: 130)
-                                            .padding()
-                                            .cornerRadius(10)
-                                    default:
-                                        Image(systemName: "x.circle.fill")
+            ZStack {
+                Color.black
+                    .ignoresSafeArea()
+                if viewModel.isLoading {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                } else {
+                    ZStack {
+                        ScrollView {
+                            LazyVGrid(columns: columns) {
+                                ForEach(viewModel.imagesURL, id: \.self) { imageURL in
+                                    AsyncImage(url: imageURL) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(width: 87, height: 130)
+                                                .foregroundStyle(.white)
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 87, height: 130)
+                                                .padding()
+                                                .cornerRadius(10)
+                                        default:
+                                            Image(systemName: "x.circle.fill")
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.gray)
-                        }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.gray)
                     }
-                    ToolbarItem(placement: .principal) {
-                        Text("Overlays")
-                            .foregroundColor(.white)
-                    }
+                }
+                ToolbarItem(placement: .principal) {
+                    Text("Overlays")
+                        .foregroundColor(.white)
                 }
             }
         }
