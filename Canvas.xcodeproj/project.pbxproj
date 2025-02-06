@@ -53,6 +53,22 @@
 			path = " RESTService";
 			sourceTree = "<group>";
 		};
+		5501C45C2D543BD5008C002E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				5593B9F42D51625C00AC5F3D /* MainView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		5501C45D2D543BDD008C002E /* Overlays */ = {
+			isa = PBXGroup;
+			children = (
+				559BD0BB2D53C13A000A52F7 /* OverlaysView.swift */,
+			);
+			path = Overlays;
+			sourceTree = "<group>";
+		};
 		5593B9E62D51625C00AC5F3D = {
 			isa = PBXGroup;
 			children = (
@@ -92,8 +108,8 @@
 		559BD0B92D53ABB4000A52F7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				5593B9F42D51625C00AC5F3D /* MainView.swift */,
-				559BD0BB2D53C13A000A52F7 /* OverlaysView.swift */,
+				5501C45D2D543BDD008C002E /* Overlays */,
+				5501C45C2D543BD5008C002E /* Main */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
