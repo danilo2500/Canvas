@@ -15,6 +15,9 @@
 		5501C4632D5500BB008C002E /* CuratedPhotosResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4622D5500BB008C002E /* CuratedPhotosResponse.swift */; };
 		5501C4652D550175008C002E /* OverlaysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4642D550175008C002E /* OverlaysViewModel.swift */; };
 		5501C4672D5503F8008C002E /* OverlaysService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4662D5503F8008C002E /* OverlaysService.swift */; };
+		5501C46A2D5531A0008C002E /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C4692D5531A0008C002E /* BackgroundView.swift */; };
+		5501C46C2D553402008C002E /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C46B2D553402008C002E /* DismissButton.swift */; };
+		5501C46E2D553424008C002E /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501C46D2D553424008C002E /* ProgressIndicator.swift */; };
 		5593B9F32D51625C00AC5F3D /* CanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5593B9F22D51625C00AC5F3D /* CanvasApp.swift */; };
 		5593B9F52D51625C00AC5F3D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5593B9F42D51625C00AC5F3D /* MainView.swift */; };
 		5593B9F72D51626100AC5F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5593B9F62D51626100AC5F3D /* Assets.xcassets */; };
@@ -31,6 +34,9 @@
 		5501C4622D5500BB008C002E /* CuratedPhotosResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuratedPhotosResponse.swift; sourceTree = "<group>"; };
 		5501C4642D550175008C002E /* OverlaysViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaysViewModel.swift; sourceTree = "<group>"; };
 		5501C4662D5503F8008C002E /* OverlaysService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaysService.swift; sourceTree = "<group>"; };
+		5501C4692D5531A0008C002E /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		5501C46B2D553402008C002E /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
+		5501C46D2D553424008C002E /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		5593B9EF2D51625C00AC5F3D /* Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5593B9F22D51625C00AC5F3D /* CanvasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasApp.swift; sourceTree = "<group>"; };
 		5593B9F42D51625C00AC5F3D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -96,6 +102,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		5501C4682D553135008C002E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5501C4692D5531A0008C002E /* BackgroundView.swift */,
+				5501C46B2D553402008C002E /* DismissButton.swift */,
+				5501C46D2D553424008C002E /* ProgressIndicator.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5593B9E62D51625C00AC5F3D = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +131,7 @@
 		5593B9F12D51625C00AC5F3D /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				5501C4682D553135008C002E /* Views */,
 				559BD0BD2D53D0A5000A52F7 /* Modules */,
 				559BD0B92D53ABB4000A52F7 /* Screens */,
 				5593B9F22D51625C00AC5F3D /* CanvasApp.swift */,
@@ -220,12 +237,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5501C46E2D553424008C002E /* ProgressIndicator.swift in Sources */,
 				5501C4672D5503F8008C002E /* OverlaysService.swift in Sources */,
 				5593B9F52D51625C00AC5F3D /* MainView.swift in Sources */,
+				5501C46C2D553402008C002E /* DismissButton.swift in Sources */,
 				5501C4652D550175008C002E /* OverlaysViewModel.swift in Sources */,
 				5593B9F32D51625C00AC5F3D /* CanvasApp.swift in Sources */,
 				5501C4632D5500BB008C002E /* CuratedPhotosResponse.swift in Sources */,
 				559BD0BC2D53C13A000A52F7 /* OverlaysView.swift in Sources */,
+				5501C46A2D5531A0008C002E /* BackgroundView.swift in Sources */,
 				5501C4592D543AE1008C002E /* HTTPMethod.swift in Sources */,
 				5501C45A2D543AE2008C002E /* RESTErrors.swift in Sources */,
 				5501C4602D543CC6008C002E /* PexelsAPI.swift in Sources */,
