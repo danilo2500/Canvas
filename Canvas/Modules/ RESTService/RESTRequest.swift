@@ -12,4 +12,5 @@ protocol RESTRequest {
     var path: String { get }
     var queryItems: [URLQueryItem]? { get }
     var httpMethod: HTTPMethod { get }
+    var HTTPHeaderFields: [String: String]? { get }
 }
