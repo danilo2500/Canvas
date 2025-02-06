@@ -32,13 +32,13 @@ struct OverlaysView: View {
                                     switch phase {
                                     case .empty:
                                         ProgressView()
-                                            .frame(width: 80, height: 120)
+                                            .frame(width: 87, height: 130)
                                             .foregroundStyle(.white)
                                     case .success(let image):
                                         image
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 80, height: 120)
+                                            .frame(width: 87, height: 130)
                                             .padding()
                                             .cornerRadius(10)
                                     default:
