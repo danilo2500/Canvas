@@ -23,28 +23,26 @@ struct OverlaysView: View {
                     .ignoresSafeArea()
                 if viewModel.isLoading {
                     ProgressView()
-                        .progressViewStyle(.circular)
+                        .tint(.white)
                 } else {
-                    ZStack {
-                        ScrollView {
-                            LazyVGrid(columns: columns) {
-                                ForEach(viewModel.imagesURL, id: \.self) { imageURL in
-                                    AsyncImage(url: imageURL) { phase in
-                                        switch phase {
-                                        case .empty:
-                                            ProgressView()
-                                                .frame(width: 87, height: 130)
-                                                .foregroundStyle(.white)
-                                        case .success(let image):
-                                            image
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 87, height: 130)
-                                                .padding()
-                                                .cornerRadius(10)
-                                        default:
-                                            Image(systemName: "x.circle.fill")
-                                        }
+                    ScrollView {
+                        LazyVGrid(columns: columns) {
+                            ForEach(viewModel.imagesURL, id: \.self) { imageURL in
+                                AsyncImage(url: imageURL) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                            .frame(width: 87, height: 130)
+                                            .tint(.white)
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 87, height: 130)
+                                            .padding()
+                                            .cornerRadius(10)
+                                    default:
+                                        Image(systemName: "x.circle.fill")
                                     }
                                 }
                             }
