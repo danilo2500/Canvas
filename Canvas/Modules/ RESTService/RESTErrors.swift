@@ -9,7 +9,7 @@ import Foundation
 
 enum RESTError: Error {
     case failedToCreateURL
-    case failedToCreateImage
+    case failedToGenerateData
 }
 
 
@@ -20,8 +20,8 @@ extension RESTError: LocalizedError {
         switch self {
         case .failedToCreateURL:
             return "Failed to create URL"
-        case .failedToCreateImage:
-            return "Data provided could not create image"
+        case .failedToGenerateData:
+            return "Failed to generate a valid data"
         }
     }
 }
