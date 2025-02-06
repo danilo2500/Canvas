@@ -65,6 +65,7 @@ class RESTService<T: RESTRequest> {
         }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.httpMethod.rawValue
+        urlRequest.allHTTPHeaderFields = request.HTTPHeaderFields
         return urlRequest
     }
     
