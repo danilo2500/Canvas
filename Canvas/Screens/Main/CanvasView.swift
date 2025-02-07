@@ -19,9 +19,19 @@ struct CanvasView: View {
             VStack {
                 VStack {
                     Spacer()
-                    Rectangle()
-                        .foregroundColor(.white)
-                        .frame(height: 200)
+                    ZStack {
+                        Color.white
+                            .edgesIgnoringSafeArea(.all)
+                        ForEach(viewModel.images) { image in
+                            Image(uiImage: image.image)
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(10)
+                                .frame(width: 87, height: 130)
+                                .position(.init(x: 100, y: 100))
+                        }
+                    }
+                    .frame(height: 200)
                     Spacer()
                 }
                 TabView(showOverlaySheet: $showOverlaySheet)
@@ -61,6 +71,6 @@ struct TabView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        CanvasView()
     }
 }

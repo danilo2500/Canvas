@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+struct CanvasImage: Identifiable {
+    let id = UUID()
+    var image: UIImage
+    var position: CGPoint
+    var isSelected: Bool = false
+}
+
 class CanvasViewModel: ObservableObject {
-    
+    @Published var images: [CanvasImage] = [
+        .init(image: UIImage(systemName: "photo")!, position: .init(x: 0, y: 0))
+    ]
 }
