@@ -22,6 +22,9 @@ struct CanvasView: View {
                     ZStack {
                         Color.white
                             .edgesIgnoringSafeArea(.all)
+                            .onTapGesture {
+                                viewModel.deselectImages()
+                            }
                         ForEach(viewModel.images) { image in
                             Image(uiImage: image.image)
                                 .resizable()
@@ -30,21 +33,25 @@ struct CanvasView: View {
                                 .frame(width: 87, height: 130)
                                 .scaleEffect(image.scale)
                                 .position(image.position)
+                                .saturation(image.isSelected ? 0.0 : 1.0)
+                                .onTapGesture {
+                                    viewModel.toggleSelection(for: image.id)
+                                }
                                 .gesture(
                                     DragGesture()
                                         .onChanged { gesture in
-                                            viewModel.update(id: image.id, position: gesture.location)
+                                            viewModel.update(position: gesture.location)                     
                                         }
                                 )
                                 .gesture(
                                     MagnificationGesture()
                                         .onChanged { scale in
-                                            viewModel.update(id: image.id, scale: scale)
+                                            viewModel.update(scale: scale)
                                         }
                                 )
                         }
                     }
-                    .frame(height: 200)
+                    .frame(height: 300)
                     Spacer()
                 }
                 TabView(showOverlaySheet: $showOverlaySheet)
