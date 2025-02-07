@@ -9,8 +9,7 @@ import SwiftUI
 
 struct OverlaysView: View {
     
-    @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = OverlaysViewModel()
+    @StateObject private var viewModel = OverlaysViewModel(service: OverlaysService())
     
     let columns: [GridItem] = [
         GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())

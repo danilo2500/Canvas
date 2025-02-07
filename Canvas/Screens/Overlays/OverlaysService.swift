@@ -12,11 +12,7 @@ protocol OverlaysServiceProtocol {
 }
 
 class OverlaysService {
-    let service: RESTService<PexelsAPI>
-    
-    init(service: RESTService<PexelsAPI>) {
-        self.service = service
-    }
+    let service = RESTService<PexelsAPI>()
 }
 
 //MARK: - DetailService Protocol
