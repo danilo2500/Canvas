@@ -32,8 +32,7 @@ struct CanvasView: View {
                                 .gesture(
                                     DragGesture()
                                         .onChanged { gesture in
-                                            print(gesture.location)
-                                            viewModel.images[0].position = gesture.location
+                                            viewModel.updateImage(image, position: gesture.location)
                                         }
                                 )
                         }
