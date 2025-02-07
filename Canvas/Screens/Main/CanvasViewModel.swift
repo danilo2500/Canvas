@@ -12,6 +12,7 @@ struct CanvasImage: Identifiable {
     var image: UIImage
     var position: CGPoint
     var isSelected: Bool = false
+    var scale: CGFloat = 1.0
 }
 
 class CanvasViewModel: ObservableObject {
@@ -19,9 +20,17 @@ class CanvasViewModel: ObservableObject {
         .init(image: UIImage(systemName: "photo")!, position: .init(x: 100, y: 100))
     ]
     
-    func updateImage(_ image: CanvasImage, position: CGPoint) {
-        if let index = images.firstIndex(where: { $0.id == image.id }) {
+    
+    func update(id: UUID, position: CGPoint) {
+        if let index = images.firstIndex(where: { $0.id == id }) {
             images[index].position = position
         }
     }
+    
+    func update(id: UUID, scale: CGFloat) {
+        if let index = images.firstIndex(where: { $0.id == id }) {
+            images[index].scale = scale
+        }
+    }
+
 }

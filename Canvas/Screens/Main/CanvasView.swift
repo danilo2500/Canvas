@@ -28,11 +28,18 @@ struct CanvasView: View {
                                 .scaledToFit()
                                 .cornerRadius(10)
                                 .frame(width: 87, height: 130)
+                                .scaleEffect(image.scale)
                                 .position(image.position)
                                 .gesture(
                                     DragGesture()
                                         .onChanged { gesture in
-                                            viewModel.updateImage(image, position: gesture.location)
+                                            viewModel.update(id: image.id, position: gesture.location)
+                                        }
+                                )
+                                .gesture(
+                                    MagnificationGesture()
+                                        .onChanged { scale in
+                                            viewModel.update(id: image.id, scale: scale)
                                         }
                                 )
                         }
