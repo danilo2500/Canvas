@@ -18,4 +18,10 @@ class CanvasViewModel: ObservableObject {
     @Published var images: [CanvasImage] = [
         .init(image: UIImage(systemName: "photo")!, position: .init(x: 100, y: 100))
     ]
+    
+    func updateImage(_ image: CanvasImage, position: CGPoint) {
+        if let index = images.firstIndex(where: { $0.id == image.id }) {
+            images[index].position = position
+        }
+    }
 }
