@@ -17,20 +17,34 @@ struct CanvasImage: Identifiable {
 
 class CanvasViewModel: ObservableObject {
     @Published var images: [CanvasImage] = [
-        .init(image: UIImage(systemName: "photo")!, position: .init(x: 100, y: 100))
+        .init(image: UIImage(named: "bee")!, position: .init(x: 100, y: 100)),
+        .init(image: UIImage(named: "bee")!, position: .init(x: 200, y: 100))
     ]
     
     
-    func update(id: UUID, position: CGPoint) {
-        if let index = images.firstIndex(where: { $0.id == id }) {
-            images[index].position = position
+    func update(position: CGPoint) {
+        for index in images.indices where images[index].isSelected {
+//            images[index].position.
         }
     }
     
-    func update(id: UUID, scale: CGFloat) {
-        if let index = images.firstIndex(where: { $0.id == id }) {
+    func update(scale: CGFloat) {
+        for index in images.indices where images[index].isSelected {
             images[index].scale = scale
         }
     }
-
+    
+    func toggleSelection(for id: UUID) {
+        if let index = images.firstIndex(where: { $0.id == id }) {
+            images[index].isSelected.toggle()
+        }
+    }
+    
+    
+    
+    func deselectImages() {
+        for index in images.indices {
+            images[index].isSelected = false
+        }
+    }
 }
