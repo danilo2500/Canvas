@@ -28,7 +28,14 @@ struct CanvasView: View {
                                 .scaledToFit()
                                 .cornerRadius(10)
                                 .frame(width: 87, height: 130)
-                                .position(.init(x: 100, y: 100))
+                                .position(image.position)
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged { gesture in
+                                            print(gesture.location)
+                                            viewModel.images[0].position = gesture.location
+                                        }
+                                )
                         }
                     }
                     .frame(height: 200)

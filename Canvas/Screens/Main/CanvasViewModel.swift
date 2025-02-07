@@ -16,6 +16,6 @@ struct CanvasImage: Identifiable {
 
 class CanvasViewModel: ObservableObject {
     @Published var images: [CanvasImage] = [
-        .init(image: UIImage(systemName: "photo")!, position: .init(x: 0, y: 0))
+        .init(image: UIImage(systemName: "photo")!, position: .init(x: 100, y: 100))
     ]
 }
