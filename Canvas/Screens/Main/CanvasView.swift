@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct CanvasView: View {
+    
+    @StateObject private var viewModel = CanvasViewModel()
+    
     @State private var showOverlaySheet = false
     
     var body: some View {
