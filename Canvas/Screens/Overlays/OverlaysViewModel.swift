@@ -37,7 +37,7 @@ class OverlaysViewModel: ObservableObject {
             self.isLoading = false
             switch result {
             case .success(let response):
-                self.imagesURL = response.photos.map(\.src.small)
+                self.imagesURL = response.photos?.compactMap(\.src?.small) ?? []
             case .failure(let error):
                 print(error.localizedDescription)
                 self.showAlert = true
