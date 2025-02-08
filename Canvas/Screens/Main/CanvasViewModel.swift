@@ -12,15 +12,15 @@ struct CanvasImage: Identifiable {
     var image: UIImage
     var position: CGPoint
     var isSelected: Bool = false
-    var scale: CGFloat = 1.0
+    var scale: CGFloat = 1
     var size: CGSize
-    
-    var rect: CGRect {
-        CGRect(origin: position, size: size)
-    }
 }
 
 class CanvasViewModel: ObservableObject {
+    
+    // MARK: Private Properties
+    
+    private let snapThreshold: CGFloat = 20
     
     // MARK: Properties
     
@@ -61,36 +61,39 @@ class CanvasViewModel: ObservableObject {
         }
     }
     //should snap
-    private func snapToGuidelinesIfNeeded(imageToSnap: CanvasImage) -> CGPoint {
-        guard let index = images.firstIndex(where: { $0.id == imageToSnap.id }) else { return .zero }
-        
-        print("imageToSnap origin", imageToSnap.rect.origin)
-        
-        var point = imageToSnap.position
-        let snapSize: CGFloat = 25
-        
+    private func snapToGuidelinesIfNeeded(imageToSnap: CanvasImage)  {
+        guard let index = images.firstIndex(where: { $0.id == imageToSnap.id }) else { return }
+        let rect = calculateRectOfSnappingArea(of: imageToSnap)
+
         for image in images where imageToSnap.id != image.id {
-            if image.rect.intersects(imageToSnap.rect) {
-                print("image", image.rect)
-                
-                let intersection = imageToSnap.rect.intersection(image.rect)
-                print("width", intersection.width)
-                //snap horizontally
-                if intersection.width < snapSize {
-                    if imageToSnap.rect.minX > image.rect.midX { //snap to right
-                        images[index].position.x = image.rect.maxX
-//                        images[index].position = imageToSnap.rect.offsetBy(dx: intersection.width, dy: 0).origin
-                        print("offset", image.rect.offsetBy(dx: intersection.width, dy: 0).origin)
-                    } else {
-                        images[index].position = imageToSnap.rect.offsetBy(dx: -intersection.width, dy: 0).origin
-//                        images[index].position = image.rect.offsetBy(dx: -intersection.minX, dy: 0).origin
-                    }
+            let otherRect = calculateRectOfSnappingArea(of: image)
+            
+            let intersection = rect.intersection(otherRect)
+            
+            if intersection.width < snapThreshold {
+                if otherRect.midX < rect.minX { //Snap to right
+                    images[index].position.x += intersection.width
+                } else { //Snap to left
+                    images[index].position.x -= intersection.width
                 }
-                
-                
-                //snap vertically
+            }
+            if intersection.height < snapThreshold {
+                if otherRect.midY < rect.minY { //Snap to top
+                    images[index].position.y += intersection.height
+                } else { //Snap to bottom
+                    images[index].position.y -= intersection.height
+                }
             }
         }
-        return .zero
+    }
+    
+    private func calculateRectOfSnappingArea(of image: CanvasImage) -> CGRect {
+        return CGRect(
+            origin: CGPoint(
+                x: image.position.x - (image.size.width / 2),
+                y: image.position.y - (image.size.height / 2)
+            ),
+            size: image.size
+        )
     }
 }
