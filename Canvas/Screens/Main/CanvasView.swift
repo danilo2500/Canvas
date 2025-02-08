@@ -23,7 +23,7 @@ struct CanvasView: View {
                         Color.white
                             .edgesIgnoringSafeArea(.all)
                             .onTapGesture {
-                                viewModel.deselectImages()
+                                viewModel.deselectAllImages()
                             }
                         ForEach(viewModel.images) { image in
                             Image(uiImage: image.image)
@@ -35,18 +35,18 @@ struct CanvasView: View {
                                 .position(image.position)
                                 .saturation(image.isSelected ? 0.0 : 1.0)
                                 .onTapGesture {
-                                    viewModel.toggleSelection(for: image.id)
+                                    viewModel.selectImage(for: image.id)
                                 }
                                 .gesture(
                                     DragGesture()
                                         .onChanged { gesture in
-                                            viewModel.update(position: gesture.location)                     
+                                            viewModel.updatePosition(by: gesture.location, for: image.id)
                                         }
                                 )
                                 .gesture(
                                     MagnificationGesture()
                                         .onChanged { scale in
-                                            viewModel.update(scale: scale)
+                                            viewModel.update(scale: scale, for: image.id)
                                         }
                                 )
                         }
