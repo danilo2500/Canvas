@@ -31,7 +31,7 @@ struct CanvasView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .cornerRadius(10)
-                                    .frame(width: 87, height: 130)
+                                    .frame(width: image.width, height: image.height)
                                     .scaleEffect(image.scale)
                                     .position(image.position)
                                     .saturation(image.isSelected ? 0.0 : 1.0)
