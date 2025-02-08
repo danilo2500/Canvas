@@ -26,30 +26,39 @@ struct CanvasView: View {
                                 .onTapGesture {
                                     viewModel.deselectAllImages()
                                 }
-                            ForEach(viewModel.images) { image in
-                                Image(uiImage: image.image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .cornerRadius(10)
-                                    .scaleEffect(image.scale)
-                                    .frame(width: image.size.width, height: image.size.height)
-                                    .position(image.position)
-                                    .saturation(image.isSelected ? 0.0 : 1.0)
-                                    .onTapGesture {
-                                        viewModel.selectImage(for: image.id)
+                            ForEach(viewModel.images) { canvasImage in
+                                AsyncImage(url: canvasImage.url) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressIndicator()
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                            .scaleEffect(canvasImage.scale)
+                                            .cornerRadius(10)
+                                            .frame(width: canvasImage.size.width, height: canvasImage.size.height)
+                                            .position(canvasImage.position)
+                                            .saturation(canvasImage.isSelected ? 0.0 : 1.0)
+                                            .onTapGesture {
+                                                viewModel.selectImage(for: canvasImage.id)
+                                            }
+                                            .gesture(
+                                                DragGesture()
+                                                    .onChanged { gesture in
+                                                        viewModel.updatePosition(by: gesture.location, for: canvasImage.id)
+                                                    }
+                                            )
+                                            .gesture(
+                                                MagnificationGesture()
+                                                    .onChanged { scale in
+                                                        viewModel.update(scale: scale, for: canvasImage.id)
+                                                    }
+                                            )
+                                    default:
+                                        Image(systemName: "x.circle.fill")
                                     }
-                                    .gesture(
-                                        DragGesture()
-                                            .onChanged { gesture in
-                                                viewModel.updatePosition(by: gesture.location, for: image.id)
-                                            }
-                                    )
-                                    .gesture(
-                                        MagnificationGesture()
-                                            .onChanged { scale in
-                                                viewModel.update(scale: scale, for: image.id)
-                                            }
-                                    )
+                                }
                             }
                         }
                         .frame(width: 600, height: 300)
@@ -61,7 +70,7 @@ struct CanvasView: View {
             }
         }
         .sheet(isPresented: $showOverlaySheet) {
-            OverlaysView()
+            OverlaysView(selectedImages: $viewModel.images)
         }
     }
 }

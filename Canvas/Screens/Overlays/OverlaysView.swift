@@ -9,7 +9,9 @@ import SwiftUI
 
 struct OverlaysView: View {
     
+    @Binding var selectedImages: [CanvasImage]
     @StateObject private var viewModel = OverlaysViewModel(service: OverlaysService())
+    @Environment(\.dismiss) var dismiss
     
     let columns: [GridItem] = [
         GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())
@@ -38,6 +40,10 @@ struct OverlaysView: View {
                                             .cornerRadius(10)
                                             .frame(width: 87, height: 130)
                                             .padding()
+                                            .onTapGesture {
+                                                selectedImages.append(.init(url: imageURL))
+                                                dismiss()
+                                            }
                                     default:
                                         Image(systemName: "x.circle.fill")
                                     }
@@ -68,6 +74,6 @@ struct OverlaysView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        OverlaysView()
+        OverlaysView(selectedImages: .constant([]))
     }
 }
