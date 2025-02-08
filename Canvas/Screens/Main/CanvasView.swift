@@ -19,39 +19,41 @@ struct CanvasView: View {
             VStack {
                 VStack {
                     Spacer()
-                    ZStack {
-                        Color.white
-                            .edgesIgnoringSafeArea(.all)
-                            .onTapGesture {
-                                viewModel.deselectAllImages()
-                            }
-                        ForEach(viewModel.images) { image in
-                            Image(uiImage: image.image)
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(10)
-                                .frame(width: 87, height: 130)
-                                .scaleEffect(image.scale)
-                                .position(image.position)
-                                .saturation(image.isSelected ? 0.0 : 1.0)
+                    ScrollView(.horizontal) {
+                        ZStack {
+                            Color.white
+                                .edgesIgnoringSafeArea(.all)
                                 .onTapGesture {
-                                    viewModel.selectImage(for: image.id)
+                                    viewModel.deselectAllImages()
                                 }
-                                .gesture(
-                                    DragGesture()
-                                        .onChanged { gesture in
-                                            viewModel.updatePosition(by: gesture.location, for: image.id)
-                                        }
-                                )
-                                .gesture(
-                                    MagnificationGesture()
-                                        .onChanged { scale in
-                                            viewModel.update(scale: scale, for: image.id)
-                                        }
-                                )
+                            ForEach(viewModel.images) { image in
+                                Image(uiImage: image.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                                    .frame(width: 87, height: 130)
+                                    .scaleEffect(image.scale)
+                                    .position(image.position)
+                                    .saturation(image.isSelected ? 0.0 : 1.0)
+                                    .onTapGesture {
+                                        viewModel.selectImage(for: image.id)
+                                    }
+                                    .gesture(
+                                        DragGesture()
+                                            .onChanged { gesture in
+                                                viewModel.updatePosition(by: gesture.location, for: image.id)
+                                            }
+                                    )
+                                    .gesture(
+                                        MagnificationGesture()
+                                            .onChanged { scale in
+                                                viewModel.update(scale: scale, for: image.id)
+                                            }
+                                    )
+                            }
                         }
+                        .frame(width: 600, height: 300)
                     }
-                    .frame(height: 300)
                     Spacer()
                 }
                 TabView(showOverlaySheet: $showOverlaySheet)
