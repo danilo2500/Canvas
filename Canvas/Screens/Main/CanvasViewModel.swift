@@ -13,11 +13,10 @@ struct CanvasImage: Identifiable {
     var position: CGPoint
     var isSelected: Bool = false
     var scale: CGFloat = 1.0
-    var width: CGFloat
-    var height: CGFloat
+    var size: CGSize
     
     var rect: CGRect {
-        CGRect(origin: position, size: CGSize(width: width * scale, height: height * scale))
+        CGRect(origin: position, size: size)
     }
 }
 
@@ -26,8 +25,8 @@ class CanvasViewModel: ObservableObject {
     // MARK: Properties
     
     @Published var images: [CanvasImage] = [
-        .init(image:  UIImage(named: "bee")!, position: .init(x: 0, y: 0), width: 50, height: 50),
-        .init(image:  UIImage(named: "bee")!, position: .init(x: 100, y: 100), width: 50, height: 50),
+        .init(image:  UIImage(named: "bee")!, position: .init(x: 0, y: 0), size: CGSize(width: 50, height: 50)),
+        .init(image:  UIImage(named: "bee")!, position: .init(x: 100, y: 100), size: CGSize(width: 50, height: 50))
     ]
     
     // MARK: Public Functions
@@ -64,15 +63,15 @@ class CanvasViewModel: ObservableObject {
     //should snap
     private func snapToGuidelinesIfNeeded(imageToSnap: CanvasImage) -> CGPoint {
         guard let index = images.firstIndex(where: { $0.id == imageToSnap.id }) else { return .zero }
-
+        
+        print("imageToSnap origin", imageToSnap.rect.origin)
+        
         var point = imageToSnap.position
         let snapSize: CGFloat = 25
         
         for image in images where imageToSnap.id != image.id {
             if image.rect.intersects(imageToSnap.rect) {
-                print("imageToSnap", imageToSnap.rect)
                 print("image", image.rect)
-                
                 
                 let intersection = imageToSnap.rect.intersection(image.rect)
                 print("width", intersection.width)
