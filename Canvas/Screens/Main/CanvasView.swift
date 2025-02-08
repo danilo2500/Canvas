@@ -19,7 +19,7 @@ struct CanvasView: View {
             VStack {
                 VStack {
                     Spacer()
-                    ScrollView(.horizontal) {
+//                    ScrollView(.horizontal) {
                         ZStack {
                             Color.white
                                 .edgesIgnoringSafeArea(.all)
@@ -31,7 +31,7 @@ struct CanvasView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .cornerRadius(10)
-                                    .frame(width: image.width, height: image.height)
+                                    .frame(width: image.size.width, height: image.size.height)
                                     .scaleEffect(image.scale)
                                     .position(image.position)
                                     .saturation(image.isSelected ? 0.0 : 1.0)
@@ -51,8 +51,9 @@ struct CanvasView: View {
                                             }
                                     )
                             }
-                        }
-                        .frame(width: 600, height: 300)
+                            .frame(height: 300)
+//                        }
+//                        .frame(width: 300, height: 300)
                     }
                     Spacer()
                 }
