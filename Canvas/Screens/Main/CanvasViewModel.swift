@@ -9,11 +9,11 @@ import SwiftUI
 
 struct CanvasImage: Identifiable {
     let id = UUID()
-    var image: UIImage
-    var position: CGPoint
+    var url: URL
+    var position: CGPoint = CGPoint(x: 100, y: 130)
     var isSelected: Bool = false
     var scale: CGFloat = 1
-    var size: CGSize
+    var size: CGSize = CGSize(width: 87, height: 130)
 }
 
 class CanvasViewModel: ObservableObject {
@@ -25,8 +25,7 @@ class CanvasViewModel: ObservableObject {
     // MARK: Properties
     
     @Published var images: [CanvasImage] = [
-        .init(image:  UIImage(named: "bee")!, position: .init(x: 0, y: 0), size: CGSize(width: 50, height: 50)),
-        .init(image:  UIImage(named: "bee")!, position: .init(x: 100, y: 100), size: CGSize(width: 50, height: 50))
+        .init(url: URL(string:"https://images.pexels.com/photos/30567859/pexels-photo-30567859.jpeg?auto=compress&cs=tinysrgb&h=130")!)
     ]
     
     // MARK: Public Functions
