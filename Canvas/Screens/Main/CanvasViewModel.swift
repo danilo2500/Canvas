@@ -30,11 +30,11 @@ class CanvasViewModel: ObservableObject {
     
     // MARK: Public Functions
     
-    func updatePosition(by location: CGPoint, for id: UUID) {
+    func updatePosition(by location: CGPoint, for id: UUID, canvasSize: CGSize) {
         if let index = images.firstIndex(where: { $0.id == id }) {
             if images[index].isSelected {
                 images[index].position = location
-                snapToGuidelinesIfNeeded(imageToSnap: images[index])
+                snapToGuidelinesIfNeeded(imageToSnap: images[index], canvasSize: canvasSize)
             }
         }
     }
@@ -60,11 +60,23 @@ class CanvasViewModel: ObservableObject {
         }
     }
     //should snap
-    private func snapToGuidelinesIfNeeded(imageToSnap: CanvasImage)  {
+    private func snapToGuidelinesIfNeeded(imageToSnap: CanvasImage, canvasSize: CGSize)  {
         guard let index = images.firstIndex(where: { $0.id == imageToSnap.id }) else { return }
         let rect = calculateRectOfSnappingArea(of: imageToSnap)
 
-        for image in images where imageToSnap.id != image.id {
+        if rect.minX < 0, rect.minX > -snapThreshold { //snap to left
+            images[index].position.x = rect.width / 2
+        } else if rect.maxX > canvasSize.width, rect.maxX < canvasSize.width + snapThreshold { //snap to right
+            images[index].position.x = canvasSize.width - rect.width / 2
+        }
+        
+        if rect.minY < 0, rect.minY > -snapThreshold { //snap to top
+            images[index].position.y = rect.height / 2
+        } else if rect.maxY > canvasSize.height, rect.maxY < canvasSize.height + snapThreshold { //snap to top
+            images[index].position.y = canvasSize.height - rect.height / 2
+        }
+
+        for image in images where imageToSnap.id != image.id { // Snap between images
             let otherRect = calculateRectOfSnappingArea(of: image)
             
             let intersection = rect.intersection(otherRect)

@@ -21,42 +21,45 @@ struct CanvasView: View {
                     Spacer()
                     ScrollView(.horizontal) {
                         ZStack {
-                            Color.white
-                                .edgesIgnoringSafeArea(.all)
-                                .onTapGesture {
-                                    viewModel.deselectAllImages()
-                                }
-                            ForEach(viewModel.images) { canvasImage in
-                                AsyncImage(url: canvasImage.url) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        ProgressIndicator()
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .scaleEffect(canvasImage.scale)
-                                            .cornerRadius(10)
-                                            .frame(width: canvasImage.size.width, height: canvasImage.size.height)
-                                            .position(canvasImage.position)
-                                            .saturation(canvasImage.isSelected ? 0.0 : 1.0)
-                                            .onTapGesture {
-                                                viewModel.selectImage(for: canvasImage.id)
-                                            }
-                                            .gesture(
-                                                DragGesture()
-                                                    .onChanged { gesture in
-                                                        viewModel.updatePosition(by: gesture.location, for: canvasImage.id)
-                                                    }
-                                            )
-                                            .gesture(
-                                                MagnificationGesture()
-                                                    .onChanged { scale in
-                                                        viewModel.update(scale: scale, for: canvasImage.id)
-                                                    }
-                                            )
-                                    default:
-                                        Image(systemName: "x.circle.fill")
+                            GeometryReader { proxy in
+                                let canvasSize = proxy.size
+                                Color.white
+                                    .edgesIgnoringSafeArea(.all)
+                                    .onTapGesture {
+                                        viewModel.deselectAllImages()
+                                    }
+                                ForEach(viewModel.images) { canvasImage in
+                                    AsyncImage(url: canvasImage.url) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressIndicator()
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(canvasImage.scale)
+                                                .cornerRadius(10)
+                                                .frame(width: canvasImage.size.width, height: canvasImage.size.height)
+                                                .position(canvasImage.position)
+                                                .saturation(canvasImage.isSelected ? 0.0 : 1.0)
+                                                .onTapGesture {
+                                                    viewModel.selectImage(for: canvasImage.id)
+                                                }
+                                                .gesture(
+                                                    DragGesture()
+                                                        .onChanged { gesture in
+                                                            viewModel.updatePosition(by: gesture.location, for: canvasImage.id, canvasSize: canvasSize)
+                                                        }
+                                                )
+                                                .gesture(
+                                                    MagnificationGesture()
+                                                        .onChanged { scale in
+                                                            viewModel.update(scale: scale, for: canvasImage.id)
+                                                        }
+                                                )
+                                        default:
+                                            Image(systemName: "x.circle.fill")
+                                        }
                                     }
                                 }
                             }
