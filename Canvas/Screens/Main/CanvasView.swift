@@ -19,7 +19,6 @@ struct CanvasView: View {
             VStack {
                 VStack {
                     Spacer()
-                    ScrollView(.horizontal) {
                         ZStack {
                             GeometryReader { proxy in
                                 let canvasSize = proxy.size
@@ -81,8 +80,7 @@ struct CanvasView: View {
                                 }
                             }
                         }
-                        .frame(width: 600, height: 300)
-                    }
+                        .frame(height: 300)
                     Spacer()
                 }
                 TabView(showOverlaySheet: $showOverlaySheet)
