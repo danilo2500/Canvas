@@ -55,7 +55,7 @@ struct CanvasView: View {
                                                 .saturation(canvasImage.isSelected ? 0.0 : 1.0)
                                                 .frame(width: canvasImage.size.width, height: canvasImage.size.height)
                                                 .border(canvasImage.isSelected ? .blue : .clear)
-                                                .position(canvasImage.position)   
+                                                .position(canvasImage.position)
                                                 .onTapGesture {
                                                     viewModel.selectImage(for: canvasImage.id)
                                                 }
@@ -80,6 +80,7 @@ struct CanvasView: View {
                                     }
                                 }
                             }
+                            .clipped()
                         }
                         .frame(height: 300)
                     Spacer()
