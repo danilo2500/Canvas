@@ -52,9 +52,10 @@ struct CanvasView: View {
                                                 .scaledToFit()
                                                 .scaleEffect(canvasImage.scale)
                                                 .cornerRadius(10)
-                                                .frame(width: canvasImage.size.width, height: canvasImage.size.height)
-                                                .position(canvasImage.position)
                                                 .saturation(canvasImage.isSelected ? 0.0 : 1.0)
+                                                .frame(width: canvasImage.size.width, height: canvasImage.size.height)
+                                                .border(canvasImage.isSelected ? .blue : .clear)
+                                                .position(canvasImage.position)   
                                                 .onTapGesture {
                                                     viewModel.selectImage(for: canvasImage.id)
                                                 }
