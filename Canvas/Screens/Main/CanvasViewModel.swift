@@ -35,13 +35,9 @@ class CanvasViewModel: ObservableObject {
     
     
     // MARK: Properties
-    @Published var snapLines: [SnapLine] = [
+    @Published var snapLines: [SnapLine] = []
     
-    ]
-    
-    @Published var images: [CanvasImage] = [
-        .init(url: URL(string:"https://images.pexels.com/photos/30567859/pexels-photo-30567859.jpeg?auto=compress&cs=tinysrgb&h=130")!)
-    ]
+    @Published var images: [CanvasImage] = []
     
     // MARK: Public Functions
     
