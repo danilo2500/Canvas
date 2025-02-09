@@ -28,6 +28,20 @@ struct CanvasView: View {
                                     .onTapGesture {
                                         viewModel.deselectAllImages()
                                     }
+                                ForEach(viewModel.snapLines) { snapLine in
+                                    switch snapLine.orientation {
+                                    case .horizontal(let yPosition):
+                                        Rectangle()
+                                            .fill(Color.yellow)
+                                            .frame(width: canvasSize.width, height: 1)
+                                            .position(x: canvasSize.width / 2, y: yPosition)
+                                    case .vertical(let xPosition):
+                                        Rectangle()
+                                            .fill(Color.yellow)
+                                            .frame(width: 1, height: canvasSize.height)
+                                            .position(x: xPosition, y: canvasSize.height / 2)
+                                    }
+                                }
                                 ForEach(viewModel.images) { canvasImage in
                                     AsyncImage(url: canvasImage.url) { phase in
                                         switch phase {
@@ -50,6 +64,9 @@ struct CanvasView: View {
                                                         .onChanged { gesture in
                                                             viewModel.updatePosition(by: gesture.location, for: canvasImage.id, canvasSize: canvasSize)
                                                         }
+                                                        .onEnded({ _ in
+                                                            viewModel.removeAllSnapLines()
+                                                        })
                                                 )
                                                 .gesture(
                                                     MagnificationGesture()

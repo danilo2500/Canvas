@@ -24,7 +24,7 @@ struct OverlaysView: View {
                 ScrollView {
                     LazyVGrid(columns: columns) {
                         if viewModel.isLoading {
-                            ForEach(0..<13) { _ in
+                            ForEach(0..<15) { _ in
                                 ProgressIndicator()
                             }
                         } else {
