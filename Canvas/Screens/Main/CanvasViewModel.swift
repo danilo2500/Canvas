@@ -82,14 +82,18 @@ class CanvasViewModel: ObservableObject {
 
         if rect.minX < 0, rect.minX > -snapThreshold { //snap to left
             images[index].position.x = rect.width / 2
+            snapLines.append(SnapLine(orientation: .vertical(xPosition: 0)))
         } else if rect.maxX > canvasSize.width, rect.maxX < canvasSize.width + snapThreshold { //snap to right
             images[index].position.x = canvasSize.width - rect.width / 2
+            snapLines.append(SnapLine(orientation: .vertical(xPosition: canvasSize.width)))
         }
         
         if rect.minY < 0, rect.minY > -snapThreshold { //snap to top
             images[index].position.y = rect.height / 2
+            snapLines.append(SnapLine(orientation: .horizontal(yPosition: 0)))
         } else if rect.maxY > canvasSize.height, rect.maxY < canvasSize.height + snapThreshold { //snap to top
             images[index].position.y = canvasSize.height - rect.height / 2
+            snapLines.append(SnapLine(orientation: .horizontal(yPosition: canvasSize.height )))
         }
 
         for image in images where imageToSnap.id != image.id { // Snap between images
