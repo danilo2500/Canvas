@@ -72,73 +72,81 @@ class CanvasViewModel: ObservableObject {
     }
     
     private func snapToGuidelinesIfNeeded(canvasSize: CGSize, for id: UUID) {
-            removeAllSnapLines()
-            guard let index = images.firstIndex(where: { $0.id == id }) else { return }
-            let movingImage = images[index]
-            let rect = calculateRectOfSnappingArea(of: movingImage)
-            let canvasRect = CGRect(origin: .zero, size: canvasSize)
-            
-            if rectIsOnLeftEdge(rect, of: canvasRect.minX) {
-                images[index].position.x = rect.width / 2
-                snapLines.append(SnapLine(orientation: .vertical(xPosition: 0)))
-            } else if rectIsOnRightEdge(rect, of: canvasRect.maxX) {
-                images[index].position.x = canvasSize.width - rect.width / 2
-                snapLines.append(SnapLine(orientation: .vertical(xPosition: canvasSize.width)))
-            }
-            
-            if rectIsOnTopEdge(rect, of: canvasRect.maxY) {
-                images[index].position.y = canvasSize.height - rect.height / 2
-                snapLines.append(SnapLine(orientation: .horizontal(yPosition: canvasSize.height)))
-                
-            } else if rectIsOnBottomEdge(rect, of: canvasRect.minY) {
-                images[index].position.y = rect.height / 2
-                snapLines.append(SnapLine(orientation: .horizontal(yPosition: 0)))
-            }
-            
-            for image in images where movingImage.id != image.id { // Snap between images
-                let otherRect = calculateRectOfSnappingArea(of: image)
-                
-                if rectIsOnRightEdge(rect, of: otherRect.minX) {
-                    images[index].position.x = otherRect.minX - rect.width / 2
-                    snapLines.append(SnapLine(orientation: .vertical(xPosition: otherRect.origin.x)))
-                }
-                
-                if rectIsOnLeftEdge(rect, of: otherRect.maxX) {
-                    images[index].position.x = otherRect.maxX + rect.width / 2
-                    snapLines.append(SnapLine(orientation: .vertical(xPosition: otherRect.origin.x + otherRect.size.width)))
-                    
-                }
-            
-                if rectIsOnTopEdge(rect, of: otherRect.maxY) {
-                    images[index].position.y = otherRect.maxY - rect.height / 2
-                    snapLines.append(SnapLine(orientation: .horizontal(yPosition: otherRect.origin.y + otherRect.size.height)))
-                }
-                if rectIsOnBottomEdge(rect, of: otherRect.minY) {
-                    images[index].position.y = otherRect.minY + rect.height / 2
-                    snapLines.append(SnapLine(orientation: .horizontal(yPosition: otherRect.origin.y)))
-                }
-            }
+        removeAllSnapLines()
+        snapToCanvasIfNeeded(canvasSize: canvasSize, for: id)
+        snapToImagesIfNeeded(canvasSize: canvasSize, for: id)
+    }
+    
+    private func snapToCanvasIfNeeded(canvasSize: CGSize, for id: UUID) {
+        guard let index = images.firstIndex(where: { $0.id == id }) else { return }
+        let movingImage = images[index]
+        let rect = calculateRectOfSnappingArea(of: movingImage)
+        let canvasRect = CGRect(origin: .zero, size: canvasSize)
+        
+        if rectIsOnLeftEdge(rect, of: canvasRect.minX) {
+            images[index].position.x = rect.width / 2
+            snapLines.append(SnapLine(orientation: .vertical(xPosition: 0)))
+        } else if rectIsOnRightEdge(rect, of: canvasRect.maxX) {
+            images[index].position.x = canvasSize.width - rect.width / 2
+            snapLines.append(SnapLine(orientation: .vertical(xPosition: canvasSize.width)))
         }
         
-        private func rectIsOnLeftEdge(_ rect: CGRect, of xPosition: CGFloat) -> Bool {
-            return positionIsOnSnapingRangeOfPoint(rect.minX, point: xPosition)
+        if rectIsOnTopEdge(rect, of: canvasRect.maxY) {
+            images[index].position.y = canvasSize.height - rect.height / 2
+            snapLines.append(SnapLine(orientation: .horizontal(yPosition: canvasSize.height)))
+        } else if rectIsOnBottomEdge(rect, of: canvasRect.minY) {
+            images[index].position.y = rect.height / 2
+            snapLines.append(SnapLine(orientation: .horizontal(yPosition: 0)))
         }
+    }
     
-        private func rectIsOnRightEdge(_ rect: CGRect, of xPosition: CGFloat) -> Bool {
-            return positionIsOnSnapingRangeOfPoint(rect.maxX, point: xPosition)
-        }
+    private func snapToImagesIfNeeded(canvasSize: CGSize, for id: UUID) {
+        guard let index = images.firstIndex(where: { $0.id == id }) else { return }
+        let movingImage = images[index]
+        let rect = calculateRectOfSnappingArea(of: movingImage)
+        let canvasRect = CGRect(origin: .zero, size: canvasSize)
+        
+        for image in images where movingImage.id != image.id {
+            let otherRect = calculateRectOfSnappingArea(of: image)
             
-        private func rectIsOnTopEdge(_ rect: CGRect, of yPosition: CGFloat) -> Bool {
-            return positionIsOnSnapingRangeOfPoint(rect.maxY, point: yPosition)
+            if rectIsOnRightEdge(rect, of: otherRect.minX) {
+                images[index].position.x = otherRect.minX - rect.width / 2
+                snapLines.append(SnapLine(orientation: .vertical(xPosition: otherRect.origin.x)))
+            }
+            if rectIsOnLeftEdge(rect, of: otherRect.maxX) {
+                images[index].position.x = otherRect.maxX + rect.width / 2
+                snapLines.append(SnapLine(orientation: .vertical(xPosition: otherRect.origin.x + otherRect.size.width)))
+            }
+            if rectIsOnTopEdge(rect, of: otherRect.minY) {
+                images[index].position.y = otherRect.minY - rect.height / 2
+                snapLines.append(SnapLine(orientation: .horizontal(yPosition: otherRect.origin.y)))
+            }
+            if rectIsOnBottomEdge(rect, of: otherRect.maxY) {
+                images[index].position.y = otherRect.maxY + rect.height / 2
+                snapLines.append(SnapLine(orientation: .horizontal(yPosition: otherRect.origin.y + otherRect.size.height)))
+            }
         }
+    }
     
-        private func rectIsOnBottomEdge(_ rect: CGRect, of yPosition: CGFloat) -> Bool {
-            return positionIsOnSnapingRangeOfPoint(rect.minY, point: yPosition)
-        }
+    private func rectIsOnLeftEdge(_ rect: CGRect, of xPosition: CGFloat) -> Bool {
+        return positionIsOnSnapingRangeOfPoint(rect.minX, point: xPosition)
+    }
     
-        private func positionIsOnSnapingRangeOfPoint(_ position: CGFloat, point: CGFloat) -> Bool {
-            return ((point - snapThreshold)...(point + snapThreshold)).contains(position)
-        }
+    private func rectIsOnRightEdge(_ rect: CGRect, of xPosition: CGFloat) -> Bool {
+        return positionIsOnSnapingRangeOfPoint(rect.maxX, point: xPosition)
+    }
+    
+    private func rectIsOnTopEdge(_ rect: CGRect, of yPosition: CGFloat) -> Bool {
+        return positionIsOnSnapingRangeOfPoint(rect.maxY, point: yPosition)
+    }
+    
+    private func rectIsOnBottomEdge(_ rect: CGRect, of yPosition: CGFloat) -> Bool {
+        return positionIsOnSnapingRangeOfPoint(rect.minY, point: yPosition)
+    }
+    
+    private func positionIsOnSnapingRangeOfPoint(_ position: CGFloat, point: CGFloat) -> Bool {
+        return ((point - snapThreshold)...(point + snapThreshold)).contains(position)
+    }
     
     func removeAllSnapLines() {
         snapLines.removeAll()
