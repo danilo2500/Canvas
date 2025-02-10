@@ -12,7 +12,7 @@ struct CanvasImage: Identifiable {
     var url: URL
     var position: CGPoint = CGPoint(x: 100, y: 130)
     var isSelected: Bool = false
-    var scale: CGFloat = 1
+    let initialSize: CGSize = CGSize(width: 87, height: 130)
     var size: CGSize = CGSize(width: 87, height: 130)
 }
 
@@ -53,7 +53,8 @@ class CanvasViewModel: ObservableObject {
     func update(scale: CGFloat, for id: UUID) {
         if let index = images.firstIndex(where: { $0.id == id }) {
             if images[index].isSelected {
-                images[index].scale = scale
+                images[index].size.width = images[index].initialSize.width * scale
+                images[index].size.height = images[index].initialSize.height * scale
             }
         }
     }
