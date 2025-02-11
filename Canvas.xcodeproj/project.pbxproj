@@ -69,13 +69,13 @@
 			path = " RESTService";
 			sourceTree = "<group>";
 		};
-		5501C45C2D543BD5008C002E /* Main */ = {
+		5501C45C2D543BD5008C002E /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
 				5593B9F42D51625C00AC5F3D /* CanvasView.swift */,
 				55B637442D56482300A4CB04 /* CanvasViewModel.swift */,
 			);
-			path = Main;
+			path = Canvas;
 			sourceTree = "<group>";
 		};
 		5501C45D2D543BDD008C002E /* Overlays */ = {
@@ -156,7 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				5501C45D2D543BDD008C002E /* Overlays */,
-				5501C45C2D543BD5008C002E /* Main */,
+				5501C45C2D543BD5008C002E /* Canvas */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
